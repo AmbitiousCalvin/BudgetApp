@@ -39,7 +39,7 @@ export default function AddBudgetModal({ show, handleClose }) {
               ref={maxRef}
               type="number"
               min={0}
-              max={10000000}
+              max={1000000}
               step={0.01}
             />
           </FormGroup>

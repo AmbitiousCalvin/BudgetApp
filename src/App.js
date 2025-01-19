@@ -24,73 +24,74 @@ export default function App() {
   }
 
   return (
-    <>
-      <Container className="my-4">
-        <Stack direction="horizontal" className="mb-4" gap={1}>
-          <h1 className="me-auto">Budget</h1>
+    <Container fluid className="my-4 px-4">
+      <Stack
+        direction="horizontal"
+        className="mb-4 d-flex align-items-start"
+        gap={1}
+      >
+        <h1 className="me-auto">Budget</h1>
+        <div className="d-flex gap-2 flex-wrap justify-content-end ms-auto">
           <Button onClick={() => setShowAddBudgetModal(true)} variant="primary">
             Add Budget
           </Button>
           <Button variant="outline-primary" onClick={openAddExpenseModal}>
             Add Expense
           </Button>
-        </Stack>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "1rem",
-            justifyContent: "center",
-          }}
-        >
-          {budgets.map((budget) => {
-            const amount = getBudgetExpense(budget.id).reduce(
-              (total, expense) => total + expense.amount,
-              0
-            );
-            return (
-              <BudgetCard
-                key={budget.id}
-                name={budget.name}
-                amount={amount}
-                max={budget.max}
-                gray
-                onAddExpenseClick={() => openAddExpenseModal(budget.id)}
-                onViewExpenseClick={() =>
-                  setViewExpensesModalBudgetId(budget.id)
-                }
-              />
-            );
-          })}
-
-          <UncategorizedBudgetCard
-            onAddExpenseClick={() =>
-              openAddExpenseModal(UNCATEGORIZED_BUDGET_ID)
-            }
-            onViewExpenseClick={() =>
-              setViewExpensesModalBudgetId(UNCATEGORIZED_BUDGET_ID)
-            }
-          />
-
-          <TotalBudgetCard />
         </div>
+      </Stack>
 
-        <AddBudgetModal
-          show={showAddBudgetModal}
-          handleClose={() => setShowAddBudgetModal(false)}
-        />
-        <AddExpenseModal
-          show={showAddExpenseModal}
-          handleClose={() => setShowAddExpenseModal(false)}
-          defaultBudgetId={addExpenseModalBudgetId}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(350px, 1fr))",
+          gap: "1rem",
+          justifyContent: "center",
+          alignItems: "flex-start",
+        }}
+      >
+        {budgets.map((budget) => {
+          const amount = getBudgetExpense(budget.id).reduce(
+            (total, expense) => total + expense.amount,
+            0
+          );
+          return (
+            <BudgetCard
+              key={budget.id}
+              name={budget.name}
+              amount={amount}
+              max={budget.max}
+              gray
+              onAddExpenseClick={() => openAddExpenseModal(budget.id)}
+              onViewExpenseClick={() => setViewExpensesModalBudgetId(budget.id)}
+            />
+          );
+        })}
+
+        <UncategorizedBudgetCard
+          onAddExpenseClick={() => openAddExpenseModal(UNCATEGORIZED_BUDGET_ID)}
+          onViewExpenseClick={() =>
+            setViewExpensesModalBudgetId(UNCATEGORIZED_BUDGET_ID)
+          }
         />
 
-        <ViewExpensesModal
-          budgetId={viewExpensesModalBudgetId}
-          handleClose={() => setViewExpensesModalBudgetId()}
-        />
-      </Container>
-    </>
+        <TotalBudgetCard />
+      </div>
+
+      <AddBudgetModal
+        show={showAddBudgetModal}
+        handleClose={() => setShowAddBudgetModal(false)}
+      />
+      <AddExpenseModal
+        show={showAddExpenseModal}
+        handleClose={() => setShowAddExpenseModal(false)}
+        defaultBudgetId={addExpenseModalBudgetId}
+      />
+
+      <ViewExpensesModal
+        budgetId={viewExpensesModalBudgetId}
+        handleClose={() => setViewExpensesModalBudgetId()}
+      />
+    </Container>
   );
 }
