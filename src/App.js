@@ -3,10 +3,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
 import Stack from "react-bootstrap/Stack";
 import Card from "react-bootstrap/Card";
-import { ProgressBar, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import BudgetCard from "./components/BudgetCard";
+import { useState } from "react";
+import { useBudgets } from "./contexts/useBudgets";
+import { AddBudgetModal } from "./components/AddBudgetModal";
 
 export default function App() {
+  const [showAddBudgetModal, setShowAddBudgetModal] = useState(false);
+
   return (
     <>
       <Container className="my-4">
@@ -31,6 +36,10 @@ export default function App() {
           <BudgetCard name="Entertainment" amount="200" max="1000" />
           <BudgetCard name="Entertainment" amount="200" max="1000" />
         </div>
+        <AddBudgetModal
+          show={showAddBudgetModal}
+          handleClose={() => setShowAddBudgetModal(false)}
+        />
       </Container>
     </>
   );
