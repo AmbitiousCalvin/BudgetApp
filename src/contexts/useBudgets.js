@@ -3,6 +3,8 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 const BudgetsContext = createContext();
 
+export const UNCATEGORIZED_BUDGET_ID = "uncategorized";
+
 export function useBudgets() {
   return useContext(BudgetsContext);
 }
@@ -20,15 +22,15 @@ export function BudgetsContextProvider({ children }) {
       if (prevBudgets.find((budget) => budget.name === name)) {
         return prevBudgets;
       }
-      return [...prevBudgets, { id: crypto.randomUUID(), name, max }];
+      return [{ id: crypto.randomUUID(), name, max }, ...prevBudgets];
     });
   }
 
   function addExpense({ budgetId, amount, description }) {
     setExpenses((prevExpenses) => {
       return [
-        ...prevExpenses,
         { id: crypto.randomUUID(), amount, description, budgetId },
+        ...prevExpenses,
       ];
     });
   }
